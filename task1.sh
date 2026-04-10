@@ -1,9 +1,9 @@
 #!/bin/bash
 
 file="$1"
-output="./temp.csv"
-final_output="./accounts_new.csv"
-echo "id,location_id,name,title,email,department" > $final_output
+# output="temp.csv"
+# final_output="accounts_new.csv"
+echo "id,location_id,name,title,email,department" > "accounts_new.csv"
 
 while IFS= read -r line; do
     #extract full name, separate name and last name, capitalize first chars in each
@@ -27,7 +27,7 @@ while IFS= read -r line; do
         title=$(cut -f4 -d',' <<< "$line")
     fi
 
-    echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email,,},${department}" >> $output
+    echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email,,},${department}" >> "temp.csv"
     
 
 done < <(sed '1d' $file)
@@ -48,5 +48,5 @@ NR==FNR {
 count[$5] > 1 {
     sub(/@/, $2 "@", $5)
 }
-{ print }' "$output" "$output" >> "$final_output"
+{ print }' "temp.csv" "temp.csv" >> "accounts_new.csv"
 rm temp.csv
