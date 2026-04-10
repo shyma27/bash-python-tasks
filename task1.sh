@@ -20,4 +20,17 @@ while IFS= read -r line; do
     department=$(cut -f6 -d',' <<< $line)
 
     echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email,,},${department}" >> $output
+    
+
 done < <(sed '1d' $file)
+
+# duplicates=$(cut -d',' -f5 $output| sort | uniq -d)
+# r=$(grep -F "$duplicates" $output)
+# echo -e "$r\n"
+
+#awk -F, 'NR==FNR {a[$5]++; next} a[$5] > 1' $output $output
+
+awk -F, 'BEGIN {OFS=","} 
+NR==FNR {count[$5]++; next} 
+count[$5] > 1 {sub(/@/, $2 "@", $5)} 
+{print}' $output $output > temp.csv && mv temp.csv accounts_new.csv
