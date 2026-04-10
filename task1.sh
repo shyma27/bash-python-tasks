@@ -47,9 +47,17 @@ NR==FNR {
     next
 }
 {
-    if (count[$5] > 1) {
-        sub(/@/, $2 "@", $5);
-    }
-    print $1,$2,$3,$4,$5,$6 ","
+# 1. Update the email if it is a duplicate
+if (count[$5] > 1) {
+    sub(/@/, $2 "@", $5)
+}
+
+# 2. Check if the line already ends with a comma. 
+# If not, add one.
+if ($0 !~ /,$/) {
+    print $0 ","
+} else {
+    print $0
+}
 }' "temp.csv" "temp.csv" > "accounts_new.csv"
 rm temp.csv
