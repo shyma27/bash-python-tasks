@@ -50,6 +50,6 @@ NR==FNR {
     if (count[$5] > 1) {
         sub(/@/, $2 "@", $5);
     }
-    print $1,$2,$3,$4,$5,$6
+    print $1,$2,$3,$4,$5,$6 ","
 }' "temp.csv" "temp.csv" > "accounts_new.csv"
 rm temp.csv
