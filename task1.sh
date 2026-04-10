@@ -20,7 +20,7 @@ while IFS= read -r line; do
 
     #extract title whether there's "" or not
     if [[ "$line" == *\"* ]]; then
-        title=$(awk -F'"' '{print $2}' <<< "$line")
+        title=$(cut -f2 -d'"' <<< "$line")
         title="\"$title\""
     else
         title=$(cut -f4 -d',' <<< "$line")
