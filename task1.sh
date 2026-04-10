@@ -1,3 +1,23 @@
 #!/bin/bash
 
-echo "Hello World!"
+file="$1"
+output="./accounts_new.csv"
+echo "id,location_id,name,title,email,department" > $output
+
+while IFS= read -r line; do
+    #extract full name, separate name and last name, capitalize first chars in each
+    full_name=$(cut -f3 -d',' <<< $line)
+    name=$(cut -f1 -d ' ' <<< $full_name)
+    last_name=$(cut -f2 -d ' ' <<< $full_name)
+    name_cap=$(echo "${name^}")
+    last_name_cap=$(echo "${last_name^}")
+
+    #write to output file
+    id=$(cut -f1 -d',' <<< $line)
+    location_id=$(cut -f2 -d',' <<< $line)
+    title=$(cut -f4 -d',' <<< $line)
+    email=$(cut -f5 -d',' <<< $line | echo ${name:0:1}${last_name}@abc.com)
+    department=$(cut -f6 -d',' <<< $line)
+
+    echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email,,},${department}" >> $output
+done < <(sed '1d' $file)
