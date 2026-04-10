@@ -3,7 +3,7 @@
 file="$1"
 # output="temp.csv"
 # final_output="accounts_new.csv"
-echo "id,location_id,name,title,email,department" > "accounts_new.csv"
+#echo "id,location_id,name,title,email,department" > "accounts_new.csv"
 
 while IFS= read -r line; do
     #extract full name, separate name and last name, capitalize first chars in each
@@ -40,6 +40,7 @@ done < <(sed '1d' $file)
 awk 'BEGIN {
     FPAT = "([^,]+)|(\"[^\"]+\")";
     OFS = ",";
+    print "id,location_id,name,title,email,department"
 }
 NR==FNR {
     count[$5]++; 
