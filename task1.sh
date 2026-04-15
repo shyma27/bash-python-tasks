@@ -27,7 +27,7 @@ while IFS= read -r line; do
         title=$(cut -f4 -d',' <<< "$line")
     fi
 
-    echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email,,},${department}" >> "temp.csv"
+    echo "${id},${location_id},${name_cap} ${last_name_cap},${title},${email},${department}" >> "temp.csv"
     
 
 done < <(sed '1d' $file)
@@ -43,21 +43,14 @@ awk 'BEGIN {
     print "id,location_id,name,title,email,department"
 }
 NR==FNR {
-    count[$5]++; 
+    count[tolower($5)]++; 
     next
 }
 {
-# 1. Update the email if it is a duplicate
-if (count[$5] > 1) {
-    sub(/@/, $2 "@", $5)
-}
-
-# 2. Check if the line already ends with a comma. 
-# If not, add one.
-if ($0 !~ /,$/) {
-    print $0 ","
-} else {
-    print $0
-}
+    if (count[tolower($5)] > 1) {
+        sub(/@/, $2 "@", $5);
+    }
+    print $1,$2,$3,$4,tolower($5),$6
 }' "temp.csv" "temp.csv" > "accounts_new.csv"
+
 rm temp.csv
