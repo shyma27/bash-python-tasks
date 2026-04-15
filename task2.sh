@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cat output.txt | awk -F'  ' '
+output="$1"
+
+cat $output | awk -F'  ' '
 /ok|not ok/ {
     status = ($1 == "ok") ? "true" : "false"
     split($3, duration, " ")
