@@ -8,7 +8,7 @@ cat output.txt | awk -F'  ' '
     sub(/, [^,]*$/, "|&", $3)
     split($3, name, "|")
     print "{\"name\": \"" name[1] "\", \"status\": " status ", \"duration\": \"" duration[count] "\"}"
-}' | jq -s '{
+}' | ./jq -s '{
     testName: "Asserts Samples",
     tests: .,
     summary: (
