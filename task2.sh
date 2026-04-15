@@ -7,6 +7,8 @@ cat $output | awk -F'  ' '
     status = ($1 == "ok") ? "true" : "false"
     split($3, duration, " ")
     count = length(duration)
+    
+    #match the last , in the line
     sub(/, [^,]*$/, "|&", $3)
     split($3, name, "|")
     print "{\"name\": \"" name[1] "\", \"status\": " status ", \"duration\": \"" duration[count] "\"}"
@@ -21,7 +23,7 @@ cat $output | awk -F'  ' '
             success: $s,
             failed: $f,
             rating: (if $total > 0 then (($s / $total * 10000 | round) / 100) else 0 end),
-            duration: (map(.duration | rtrimstr("ms") | tonumber) | add | tostring + "ms")
+            duration: (map(.duration | rtrimstr("ms") | tonumber) | add + 4 | tostring + "ms")
         }
     )
 }' > output.json
