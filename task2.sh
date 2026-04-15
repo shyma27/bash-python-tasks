@@ -27,3 +27,4 @@ cat $output | awk -F'  ' '
         }
     )
 }' > output.json
+cat output.json
