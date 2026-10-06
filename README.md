@@ -1,7 +1,3 @@
-# DevOps-Essentials: Final Task 2
-
-> **Please use branch `task2` for this task that already exist in your forked repository after you has been started task**
-
 ## Bash Task 2
 
 Company DEF decided to use testing tool for their employees. But current tool has no json output that can be using for later data processing.
