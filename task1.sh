@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#needed to use a lot of ifs instead of simple awk to pass the test
-
 file="$1"
 declare -A emails
 
@@ -72,32 +70,6 @@ while IFS= read -r line; do
     fi
 done < "temp.csv"
 
-
-# awk -F',' 'BEGIN {OFS=","} 
-# NR==FNR {count[$5]++; next} 
-# count[$5] > 1 {sub(/@/, $2 "@", $5)} 
-# {print}' $output $output > temp.csv && mv temp.csv accounts_new.csv
-
-# awk 'BEGIN {
-#     FPAT = "([^,]+)|(\"[^\"]+\")";
-#     OFS = ",";
-#     print "id,location_id,name,title,email,department"
-# }
-# NR==FNR {
-#     count[tolower($5)]++; 
-#     next
-# }
-# {
-#     if (count[tolower($5)] > 1) {
-#         sub(/@/, $2 "@", $5);
-#     }
-#     print $1,$2,$3,$4,tolower($5),$6
-# }' "temp.csv" "temp.csv" > "accounts_new.csv"
-
 rm temp.csv
-
-# for key in "${!emails[@]}"; do
-#     echo "$key => ${emails[$key]}"
-# done
 
 echo "Done"
